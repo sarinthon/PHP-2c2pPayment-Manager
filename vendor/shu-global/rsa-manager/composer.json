@@ -1,0 +1,21 @@
+{
+    "name": "shu-global/rsa-manager",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ShuGlobal\\RsaManager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sarinthon Mangkorn-ngam",
+            "email": "sarinthonton@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "web-token/jwt-framework": "^3.0",
+        "ext-openssl": "*"
+    }
+}

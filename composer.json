@@ -1,0 +1,26 @@
+{
+    "name": "shu-global/2c2p-payment-manager",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ShuGlobal\\PG2c2pPaymentManager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sarinthon Mangkorn-ngam",
+            "email": "sarinthonton@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "shu-global/rsa-manager": "^1.0",
+        "illuminate/support": "^9.21",
+        "shu-global/core": "^1.0",
+        "firebase/php-jwt": "^5.5.1",
+        "shu-global/network-manager": "^1.0",
+        "ext-simplexml": "*",
+        "laravel-zero/foundation": "^9.21"
+    }
+}
