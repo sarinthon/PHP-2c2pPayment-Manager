@@ -303,8 +303,8 @@ class PG2C2PManager
     }
 
     private static function setupKeyURLOnConfigFile($configURL) {
-        $merchantPriKeyURL = base_path().storage_path(env("PG_2C2P_CERT_MERCHANT_SK"));;
-        $pubKeyURL2c2p = base_path().storage_path(env("PG_2C2P_CERT_2C2P_PK"));
+        $merchantPriKeyURL = storage_path(env("PG_2C2P_CERT_MERCHANT_SK"));;
+        $pubKeyURL2c2p = storage_path(env("PG_2C2P_CERT_2C2P_PK"));
 
         File::replace($configURL, '{"merchantPriKeyURL": "'.$merchantPriKeyURL.'","2c2pPubKeyURL": "'.$pubKeyURL2c2p.'"}');
     }
