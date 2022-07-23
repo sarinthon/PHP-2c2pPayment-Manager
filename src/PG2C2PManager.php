@@ -270,7 +270,9 @@ class PG2C2PManager
     // Core function for payment action
 
     private static function paymentAction($data, $usingJAVA = false) {
-        self::setupRSAKey();
+        if (!$usingJAVA) {
+            self::setupRSAKey();
+        }
         $url = self::getHostForPaymentAction();
 
         $reqData = $usingJAVA ? self::encryptAndSignWithJAVA($data) : PG2C2PEncryptionManager::getInstance()->encryptDataAndSign($data);
