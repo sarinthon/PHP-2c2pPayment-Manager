@@ -14,7 +14,8 @@
         }
     ],
     "require-dev": {
-        "laravel-zero/foundation": "^9.21"
+        "laravel-zero/foundation": "^9.21",
+        "phpunit/phpunit": "^9.5"
     },
     "require": {
         "php": "^8.1",
