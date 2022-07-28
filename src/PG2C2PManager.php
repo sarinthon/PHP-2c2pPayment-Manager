@@ -188,7 +188,10 @@ class PG2C2PManager
 
         $json = self::paymentAction($data, true);
         if (isset($json)) {
-            return new ResponsePaymentAction($json);
+            $response = new ResponsePaymentAction($json);
+            $response->request = $data;
+
+            return $response;
         }
 
         return null;
@@ -209,7 +212,10 @@ class PG2C2PManager
 
         $json = self::paymentAction($data, true);
         if (isset($json)) {
-            return new ResponsePaymentAction($json);
+            $response = new ResponsePaymentAction($json);
+            $response->request = $data;
+
+            return $response;
         }
 
         return null;
@@ -229,7 +235,10 @@ class PG2C2PManager
 
         $json = self::paymentAction($data, true);
         if (isset($json)) {
-            return new ResponseRefundStatus($json);
+            $response = new ResponseRefundStatus($json);
+            $response->request = $data;
+
+            return $response;
         }
 
         return null;
@@ -261,7 +270,10 @@ class PG2C2PManager
 
         $json = self::paymentAction($data, true);
         if (isset($json)) {
-            return new ResponseFXRateInquiry($json);
+            $response = new ResponseFXRateInquiry($json);
+            $response->request = $data;
+
+            return $response;
         }
 
         return null;

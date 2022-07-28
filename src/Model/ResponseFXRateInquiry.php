@@ -6,6 +6,8 @@ use ShuGlobal\Core\Model\BaseModel;
 
 class ResponseFXRateInquiry extends BaseModel
 {
+    public string $request;
+
     public string $responseCode;
     public string $respReason;
     public ?object $baseCurrency;

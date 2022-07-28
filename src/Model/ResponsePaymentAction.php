@@ -6,6 +6,8 @@ use ShuGlobal\Core\Model\BaseModel;
 
 class ResponsePaymentAction extends BaseModel
 {
+    public string $request;
+
     public string $respCode;
     public string $respDesc;
 }

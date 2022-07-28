@@ -4,6 +4,8 @@ namespace ShuGlobal\PG2c2pPaymentManager\Model;
 
 class ResponseRefundStatus extends ResponsePayment
 {
+    public string $request;
+
     public string $timeStamp;
     public string $processType;
     public string $invoiceNo;
