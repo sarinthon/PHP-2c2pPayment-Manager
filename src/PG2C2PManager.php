@@ -249,10 +249,10 @@ class PG2C2PManager
         return in_array($channelCode, ["VI", "MA", "JC", "UP", "AL", "LP"]);
     }
 
-    public static function shouldVoid($invoiceNo): bool
+    public static function shouldVoid($invoiceNo): ?bool
     {
         $data = self::refundStatusInquiry($invoiceNo);
-        return $data->status == "A";
+        return isset($data->status) ? $data->status == "A" : null;
     }
 
     public static function foreignExchangeRate(): ?ResponseFXRateInquiry
