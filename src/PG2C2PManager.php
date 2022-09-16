@@ -279,6 +279,18 @@ class PG2C2PManager
         return null;
     }
 
+    public static function forceVerifyAndDecryption($data, $usingJAVA = false) {
+        if (!$usingJAVA) {
+            self::setupRSAKey();
+        }
+
+        try {
+            $result = $usingJAVA ? self::verifyAndDecryptWithJAVA($data) : PG2C2PEncryptionManager::getInstance()->verifyAndDecrypt($data);
+            return json_decode(json_encode(simplexml_load_string($result)));
+        } catch (\Exception $e) { }
+        return null;
+    }
+
     // Core function for payment action
 
     private static function paymentAction($data, $usingJAVA = false) {
