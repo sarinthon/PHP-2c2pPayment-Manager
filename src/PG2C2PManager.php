@@ -175,7 +175,7 @@ class PG2C2PManager
         return $response;
     }
 
-    public static function payoutInquiry($requestID, $UTR)
+    public static function payoutInquiry($requestID, $UTR = null)
     {
         $url = self::getPayoutHostURL() . "/inquiry";
         $payload = [
