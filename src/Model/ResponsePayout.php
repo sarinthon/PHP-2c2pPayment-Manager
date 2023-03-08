@@ -3,6 +3,7 @@
 namespace ShuGlobal\PG2c2pPaymentManager\Model;
 
 use ShuGlobal\Core\Model\BaseModel;
+use ShuGlobal\PG2c2pPaymentManager\PG2C2PManager;
 
 class ResponsePayout extends BaseModel
 {
@@ -25,4 +26,11 @@ class ResponsePayout extends BaseModel
 
     public ?string $beneficiaryAccountNo;
     public ?string $beneficiaryMobileNo;
+
+    public function __construct($json = null)
+    {
+        $payload = PG2C2PManager::decode($json);
+
+        parent::__construct($payload);
+    }
 }
