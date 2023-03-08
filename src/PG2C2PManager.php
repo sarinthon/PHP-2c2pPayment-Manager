@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\File;
 use ShuGlobal\NetworkManager\NetworkManager;
 use ShuGlobal\PG2c2pPaymentManager\ENUM\PG2C2PCurrencyCode;
 use ShuGlobal\PG2c2pPaymentManager\Model\RequestPaymentToken;
+use ShuGlobal\PG2c2pPaymentManager\Model\RequestPayout;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponseFXRateInquiry;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePaymentAction;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePaymentInquiry;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePaymentToken;
+use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePayout;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponseRefundStatus;
 
 enum PG2C2PProcessType: string
@@ -31,6 +33,14 @@ class PG2C2PManager
             return "https://sandbox-pgw.2c2p.com/payment/4.1";
         }
         return "https://pgw.2c2p.com/payment/4.1";
+    }
+
+    private static function getPayoutHostURL(): string
+    {
+        if (env('PG_2C2P_ENV') == "SANDBOX") {
+            return "https://sandbox-pgw.2c2p.com/payouts/api/v1.1/payout";
+        }
+        return "https://pgw.2c2p.com/payouts/api/v1.1/payout";
     }
 
     private static function getHostForPaymentAction(): string
@@ -134,6 +144,55 @@ class PG2C2PManager
 
         // Response
         return NetworkManager::request($url, $body);
+    }
+
+    public static function payout(RequestPayout $payload): ?object
+    {
+        $jwtData = self::encode($payload);
+
+        $url = self::getPayoutHostURL() . "/create";
+        $body = json_encode([
+            'payload' => "$jwtData"
+        ]);
+
+        // Response
+        $responseToken = NetworkManager::request($url, $body);
+
+        $resPayload = $responseToken->payload ?? null;
+
+        if (isset($resPayload)) {
+            $response = new ResponsePayout($resPayload);
+        } else {
+            $response = new ResponsePayout();
+            $response->respCode = $responseToken->respCode;
+            $response->respDesc = $responseToken->respDesc;
+        }
+        $resCode = $response->respCode ?? "0";
+        if (in_array($resCode, ["8197","8198","8199"])) {
+            throw new \Exception(json_encode($response));
+        }
+
+        return $response;
+    }
+
+    public static function payoutInquiry($requestID, $UTR)
+    {
+        $url = self::getPayoutHostURL() . "/inquiry";
+        $payload = [
+            'merchantID' => env('PG_2C2P_MERCHANT_ID'),
+            'requestID' => $requestID,
+            'UTR' => $UTR
+        ];
+
+        $body = json_encode([
+            "payload" => self::encode($payload)
+        ]);
+
+        // Response
+        $response = NetworkManager::request($url, $body);
+        $payload = $response->payload;
+
+        return new ResponsePayout($payload);
     }
 
     // Encoding & Decoding
