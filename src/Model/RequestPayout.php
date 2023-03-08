@@ -13,6 +13,9 @@ class RequestPayout
     public ?string $beneficiaryAccountNo;
     public ?string $beneficiaryMobileNo; // International mobile number format
 
+    public ?string $userDefined1;
+    public ?string $notificationUrl;
+
     public function __construct()
     {
         $this->merchantID = env("PG_2C2P_MERCHANT_ID");
