@@ -10,6 +10,7 @@ use ShuGlobal\PG2c2pPaymentManager\ENUM\PG2C2PCurrencyCode;
 use ShuGlobal\PG2c2pPaymentManager\Model\RequestPaymentToken;
 use ShuGlobal\PG2c2pPaymentManager\Model\RequestPayout;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponseFXRateInquiry;
+use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePayment;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePaymentAction;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePaymentInquiry;
 use ShuGlobal\PG2c2pPaymentManager\Model\ResponsePaymentToken;
@@ -129,7 +130,11 @@ class PG2C2PManager
 
         // Response
         $response = NetworkManager::request($url, $body);
-        $payload = $response->payload;
+        $payload = $response->payload ?? null;
+
+        if ($payload == null) {
+            return  new ResponsePayment($response);
+        }
 
         return new ResponsePaymentInquiry($payload);
     }

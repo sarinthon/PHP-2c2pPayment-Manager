@@ -26,6 +26,8 @@ class ResponsePaymentInquiry extends ResponsePayment
 
     public function __construct(string $jwt)
     {
+        parent::__construct();
+
         $payload = PG2C2PManager::decode($jwt);
 
         if ( isset($payload) ) {
@@ -34,14 +36,14 @@ class ResponsePaymentInquiry extends ResponsePayment
 
             $this->cardNo = $payload->cardNo ?? null;
             $this->cardToken = $payload->cardToken;
-            $this->merchantID = $payload->merchantID;
-            $this->invoiceNo = $payload->invoiceNo;
-            $this->amount = $payload->amount;
-            $this->tranRef = $payload->tranRef;
-            $this->referenceNo = $payload->referenceNo;
-            $this->agentCode = $payload->agentCode;
-            $this->channelCode = $payload->channelCode;
-            $this->issuerCountry = $payload->issuerCountry;
+            $this->merchantID = $payload->merchantID ?? "";
+            $this->invoiceNo = $payload->invoiceNo ?? "";
+            $this->amount = $payload->amount ?? 0;
+            $this->tranRef = $payload->tranRef ?? "";
+            $this->referenceNo = $payload->referenceNo ?? "";
+            $this->agentCode = $payload->agentCode ?? "";
+            $this->channelCode = $payload->channelCode ?? "";
+            $this->issuerCountry = $payload->issuerCountry ?? "";
             $this->issuerBank = $payload->issuerBank;
 
             $this->userDefined1 = $payload->userDefined1;
